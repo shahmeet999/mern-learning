@@ -8,6 +8,12 @@ const Users = () => {
       image: "https://i.pravatar.cc/150?img=1",
       places: 3,
     },
+     {
+      id: "u2",
+      name: "Max Schwarz",
+      image: "https://i.pravatar.cc/150?img=1",
+      places: 3,
+    },
   ];
   return <UserList items={USERS} />;
 };
