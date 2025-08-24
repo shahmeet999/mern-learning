@@ -8,6 +8,7 @@ const UserItems = (props) => {
     return (
     <li className="user-item">
       <Card className="user-item__content">
+        {/* Link block will be uses for the anchor tag replacement */}
         <Link to={`/${props.id}/places`}>
           <div className="user-item__image">
             <Avatar image={props.image} alt={props.name} />
