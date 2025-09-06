@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../shared/utils/validators";
 import Button from "../../shared/components/FormElements/Button";
 import "./PlaceForm.css";
+import { useForm } from "../../shared/hooks/form-hook";
 
 const dummyPlaces = [
   {
@@ -33,8 +34,16 @@ const dummyPlaces = [
 
 const UpdatePlace = () => {
   const placeId = useParams().placeId;
-
   const identifiedPlace = dummyPlaces.find((p) => p.id === placeId);
+
+  const [formState, inputHandler] = useForm(
+    {
+      title: { value: identifiedPlace.title, isValid: false },
+      description: { value: identifiedPlace.description, isValid: false },
+      address: { value: identifiedPlace.address, isValid: false },
+    },
+    false
+  );
 
   if (!identifiedPlace) {
     return (
@@ -53,9 +62,9 @@ const UpdatePlace = () => {
         label="Title"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
-        onInput={() => {}}
-        value={identifiedPlace.title}
-        valid={true}
+        onInput={inputHandler}
+        initialValue={formState.inputs.title.value}
+        initialValid={formState.inputs.title.isValid}
       />
 
       <Input
@@ -64,12 +73,12 @@ const UpdatePlace = () => {
         label="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (min. 5 characters)."
-        onInput={() => {}}
-        value={identifiedPlace.description}
-        valid={true}
+        onInput={inputHandler}
+        initialValue={formState.inputs.description.value}
+        initialValid={formState.inputs.description.isValid}
       />
 
-      <Button type="submit" disabled={true}>
+      <Button type="submit" disabled={!formState.isValid}>
         UPDATE PLACE
       </Button>
     </form>
