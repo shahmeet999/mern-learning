@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, use } from "react";
 import "./Input.css";
 import { validate } from "../../utils/validators";
 
@@ -26,6 +26,13 @@ const Input = (props) => {
     isValid: false,
     isTouched: false,
   });
+
+  const { id, onInput } = props;
+  const { value, isValid } = inputState;
+
+  useEffect(() => {
+    onInput(props.id, inputState.value, inputState.isValid);
+  }, [id, value, isValid, onInput]);
 
   const changeHadler = (event) => {
     dispatch({
