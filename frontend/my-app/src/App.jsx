@@ -11,6 +11,7 @@ import NewPlace from "./places/pages/NewPlace";
 import MainNavigation from "./user/components/Navigation/Mainnavigation";
 import UserPlaces from "./places/pages/UserPlaces";
 import UpdatePlace from "./places/pages/UpdatePlace";
+import Authenticate from "./user/pages/Auth";
 
 const App = () => {
   return (
@@ -33,7 +34,9 @@ const App = () => {
           <Route path="/places/:placeId">
             <UpdatePlace />
           </Route>
-
+          <Route path="/auth" exact>
+            <Authenticate />
+          </Route>
           {/*Redirect any unknown routes to the home page */}
           <Redirect to="/" />
         </Switch>
