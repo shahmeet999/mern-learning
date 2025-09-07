@@ -34,7 +34,7 @@ const App = () => {
   let routes;
   if (isLoggedIn) {
     routes = (
-      <React.Fragment>
+      <Switch>
         <Route path="/" exact>
           <Users />
         </Route>
@@ -48,11 +48,11 @@ const App = () => {
           <UpdatePlace />
         </Route>
         <Redirect to="/" />
-      </React.Fragment>
+      </Switch>
     );
   } else {
     routes = (
-      <React.Fragment>
+      <Switch>
         <Route path="/" exact>
           <Users />
         </Route>
@@ -63,7 +63,7 @@ const App = () => {
           <Authenticate />
         </Route>
         <Redirect to="/auth" />
-      </React.Fragment>
+      </Switch>
     );
   }
 
@@ -82,9 +82,7 @@ const App = () => {
       need to check other routes and not route to the redirect code line
       */}
         <MainNavigation />
-        <main>
-          <Switch>{routes}</Switch>
-        </main>
+        <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
   );
