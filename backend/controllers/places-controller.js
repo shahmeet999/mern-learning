@@ -60,6 +60,40 @@ const createPlace = (req, res, next) => {
   res.status(201).json({ place: createdPlace });
 };
 
+const updatePlace = (req, res, next) => {
+  const { title, description } = req.body;
+  const placeId = req.params.pid;
+  const placeIndex = DUMMY_PLACES.findIndex((p) => p.id === placeId);
+  if (placeIndex === -1) {
+    const error = new HttpError(
+      "Could not find a place for the provided id.",
+      404
+    );
+    return next(error);
+  }
+  const updatedPlace = { ...DUMMY_PLACES[placeIndex] };
+  updatedPlace.title = title;
+  updatedPlace.description = description;
+  DUMMY_PLACES[placeIndex] = updatedPlace;
+  res.status(200).json({ place: updatedPlace });
+};
+
+const deletePlace = (req, res, next) => {
+  const placeId = req.params.pid;
+  const placeIndex = DUMMY_PLACES.findIndex((p) => p.id === placeId);
+  if (placeIndex === -1) {
+    const error = new HttpError(
+      "Could not find a place for the provided id.",
+      404
+    );
+    return next(error);
+  }
+  DUMMY_PLACES.splice(placeIndex, 1);
+  res.status(200).json({ message: "Deleted place." });
+};
+
 exports.getPlaceById = getPlaceById;
 exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
+exports.updatePlace = updatePlace;
+exports.deletePlace = deletePlace;
